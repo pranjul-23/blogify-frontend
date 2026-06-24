@@ -1,83 +1,146 @@
 "use client";
-import { useState, useActionState } from "react";
-import { createBlogAction } from "../actions/createBlogAction";
-import FileUpload from "./FileUpload";
+
+import { useFormik } from "formik";
+import toast from "react-hot-toast";
+import FileUpload from "../../../shared/components/FileUpload";
+import { blogSchema } from "../validation/blogSchema";
+import { createBlog, updateBlog } from "../api/blogApi";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const initialState = {
-  message: "",
-  errors: {},
+  title: "",
+  description: "",
+  blogImage: "",
+  category: "Startup",
 };
-export default function BlogForm({ categories }) {
-  const [filepath, setFilepath] = useState("");
-  const [state, formAction, isPending] = useActionState(
-    createBlogAction,
-    initialState,
-  );
+
+export default function BlogForm({
+  initialValues = initialState,
+  categories,
+  mode = "create",
+  blogId = null,
+}) {
+  const router = useRouter();
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    setSubmitting,
+    resetForm,
+  } = useFormik({
+    initialValues,
+    validationSchema: blogSchema,
+    onSubmit: async (values) => {
+      try {
+        if (mode === "create") {
+          await createBlog(values);
+          toast.success("Blog published successfully!");
+          resetForm();
+        } else {
+          await updateBlog(blogId, values);
+          toast.success("Blog updated successfully!");
+        }
+        router.push("/");
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   const onUploadSuccess = (file) => {
-    setFilepath(file.filepath);
+    setFieldValue("blogImage", file.filepath);
   };
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label className="block text-sm mb-1">Title</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter the title"
+          value={values.title}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          className="w-full border rounded-lg py-3 px-2"
+        />
+        {touched.title && errors.title && (
+          <p className="text-sm text-red-500 font-medium mt-1">
+            {errors.title}
+          </p>
+        )}
+      </div>
       <div className="mb-4">
-        <div className="flex flex-col justify-center gap-1.5">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            className="border rounded-sm p-2"
+        <label className="block text-sm mb-1">Description</label>
+        <textarea
+          name="description"
+          value={values.description}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          className="w-full border rounded-lg py-3 px-2"
+        ></textarea>
+        {touched.description && errors.description && (
+          <p className="text-sm text-red-500 font-medium mt-1">
+            {errors.description}
+          </p>
+        )}
+      </div>
+      <div className="mb-3">
+        <label className="block text-sm mb-1">Blog Image</label>
+        {values.blogImage && (
+          <Image
+            src={values.blogImage}
+            width={800}
+            height={400}
+            alt="blog_pic"
+            className="border-b border-black mb-2"
+            placeholder="blur"
+            blurDataURL="data:image/..."
           />
-        </div>
-        {state.errors?.title?.[0] && (
-          <p className="text-xs text-red-900">{state.errors.title[0]}</p>
+        )}
+        <FileUpload onUploadSuccess={onUploadSuccess} />
+
+        {touched.blogImage && errors.blogImage && (
+          <p className="text-sm text-red-500 font-medium mt-1">
+            {errors.blogImage}
+          </p>
         )}
       </div>
-      <div className="mb-4">
-        <div className="flex flex-col justify-center gap-1.5">
-          <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            className="border rounded-sm p-2"
-          ></textarea>
-        </div>
-        {state.errors?.description?.[0] && (
-          <p className="text-xs text-red-900">{state.errors.description[0]}</p>
-        )}
-      </div>
-      <div className="mb-4">
-        <div className="flex flex-col justify-center gap-1.5">
-          <label htmlFor="description">Blog Image</label>
-          <input type="hidden" name="blogImage" value={filepath ?? ""} />
-          <FileUpload onUploadSuccess={onUploadSuccess} />
-        </div>
-        {state.errors?.blogImage?.[0] && (
-          <p className="text-xs text-red-900">{state.errors.blogImage[0]}</p>
-        )}
-      </div>
-      <div className="mb-4">
-        <div className="flex flex-col justify-center gap-1.5">
-          <label htmlFor="category">Category</label>
-          <select
-            name="category"
-            id="category"
-            className="border rounded-sm p-2"
-          >
-            {categories?.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="mb-3">
+        <label className="block text-sm mb-1">Category</label>
+        <select
+          name="category"
+          value={values.category}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          className="w-full border rounded-sm p-2"
+        >
+          {categories?.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </select>
       </div>
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer disabled:bg-green-50"
-        disabled={isPending}
+        className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer disabled:bg-green-50"
+        disabled={isSubmitting}
       >
-        {isPending ? "Publishing..." : "Publish"}
+        {isSubmitting
+          ? mode === "edit"
+            ? "Updating..."
+            : "Publishing..."
+          : mode === "edit"
+            ? "Update Blog"
+            : "Publish"}
       </button>
     </form>
   );

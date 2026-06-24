@@ -11,6 +11,8 @@ const Card = ({ id, image, title, description, category, icon = null }) => {
           height={400}
           alt="blog_pic"
           className="border-b border-black"
+          placeholder="blur"
+          blurDataURL="data:image/..."
         />
       </Link>
       <p className="text-sm text-white bg-black px-1 mt-5 ml-5 inline-block">

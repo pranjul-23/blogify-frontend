@@ -5,7 +5,9 @@ const CategoryTab = ({ currentTab, onTabChange }) => {
     <div className="flex justify-center gap-6 my-10">
       <button
         className={
-          currentTab === "All" ? "bg-black text-white py-1 px-4 rounded-sm" : ""
+          currentTab === "All"
+            ? "bg-blue-700 text-white py-1 px-4 rounded-sm"
+            : ""
         }
         onClick={() => onTabChange("All")}
       >
@@ -14,7 +16,7 @@ const CategoryTab = ({ currentTab, onTabChange }) => {
       <button
         className={
           currentTab === "Technology"
-            ? "bg-black text-white py-1 px-4 rounded-sm"
+            ? "bg-blue-700 text-white py-1 px-4 rounded-sm"
             : ""
         }
         onClick={() => onTabChange("Technology")}
@@ -24,7 +26,7 @@ const CategoryTab = ({ currentTab, onTabChange }) => {
       <button
         className={
           currentTab === "Startup"
-            ? "bg-black text-white py-1 px-4 rounded-sm"
+            ? "bg-blue-700 text-white py-1 px-4 rounded-sm"
             : ""
         }
         onClick={() => onTabChange("Startup")}
@@ -34,7 +36,7 @@ const CategoryTab = ({ currentTab, onTabChange }) => {
       <button
         className={
           currentTab === "Lifestyle"
-            ? "bg-black text-white py-1 px-4 rounded-sm"
+            ? "bg-blue-700 text-white py-1 px-4 rounded-sm"
             : ""
         }
         onClick={() => onTabChange("Lifestyle")}

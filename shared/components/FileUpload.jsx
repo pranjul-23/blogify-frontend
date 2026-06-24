@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { handleFileupload } from "../api/blogApi";
+import { uploadFile } from "../../features/blog/api/blogApi";
 
 export default function FileUpload({ onUploadSuccess }) {
   const [isUploading, setIsUploading] = useState(false);
@@ -13,16 +13,11 @@ export default function FileUpload({ onUploadSuccess }) {
     formData.append("file", file);
     try {
       setIsUploading(true);
-      const result = await handleFileupload(formData);
-      console.log("result", result);
-      if (!result.sucess) {
-        setError(result.errors.file[0]);
-        return;
-      }
+      const uploadedFile = await uploadFile(formData);
 
       onUploadSuccess({
-        filename: result.data?.filename,
-        filepath: result.data?.filepath,
+        filename: uploadedFile.filename,
+        filepath: uploadedFile.filepath,
       });
       setError("");
     } catch (error) {
@@ -42,8 +37,10 @@ export default function FileUpload({ onUploadSuccess }) {
           onChange={handleFileChange}
         />
       </div>
-      {isUploading && <p className="text-xs">Uploading...</p>}
-      {error && <p className="text-xs text-red-700">{error}</p>}
+      {isUploading && <p className="text-sm">Uploading...</p>}
+      {error && (
+        <p className="text-sm text-red-500 font-medium mt-1">{error}</p>
+      )}
     </>
   );
 }

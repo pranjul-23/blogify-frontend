@@ -10,11 +10,11 @@ export default async function CreateBlog() {
   const categories = await getBlogCategories();
 
   return (
-    <main className="container mx-auto py-8">
+    <div className="container mx-auto py-8">
       <h1 className="text-2xl text-center font-bold mb-6">Create Blog</h1>
       <div className="w-xl mx-auto">
-        <BlogForm categories={categories} />
+        <BlogForm categories={categories} mode="create" />
       </div>
-    </main>
+    </div>
   );
 }
