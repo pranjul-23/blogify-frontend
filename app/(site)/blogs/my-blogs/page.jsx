@@ -1,10 +1,9 @@
-export const revalidate = 60;
-
+export const dynamic = "force-dynamic";
 import BlogList from "@/features/blog/components/BlogList";
-import { getAllBlogs } from "@/features/blog/api/blogApis";
+import { getMyBlogs } from "@/shared/api/api-server";
 
-export default async function Home() {
-  const { data: blogs } = await getAllBlogs();
+export default async function MyBlogsPage() {
+  const { data: blogs } = await getMyBlogs();
 
   return (
     <>

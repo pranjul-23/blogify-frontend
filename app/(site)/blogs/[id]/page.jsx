@@ -1,26 +1,17 @@
-import React from "react";
+export const revalidate = 60;
+
 import Image from "next/image";
-import Link from "next/link";
-import { getBlogDetails } from "@/features/blog/api/blogApi";
+import BlogActions from "@/features/blog/components/BlogActions";
+import { getBlogDetails } from "@/features/blog/api/blogApis";
 
 export async function BlogDetails({ params }) {
   const { id } = await params;
-  const blogData = await getBlogDetails(id);
+  const { data: blogData } = await getBlogDetails(id);
 
   return (
     <>
       <div className="bg-gray-200 py-5 px-5 md:px-12 lg:px-28">
-        <div className="flex items-center justify-end">
-          <Link
-            href={`/blogs/edit/${id}`}
-            className="text-blue-500 text-lg underline hover:text-blue-600"
-          >
-            Edit
-          </Link>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-            Delete
-          </button>
-        </div>
+        <BlogActions blogId={id} />
         <div className="text-center my-8">
           <h1 className="text-2xl sm:text-5xl font-semibold max-w-175 mx-auto mb-4">
             {blogData?.title}
@@ -32,8 +23,8 @@ export async function BlogDetails({ params }) {
             height={50}
             className="mx-auto mt-6 border border-white rounded-full"
             loading="eager"
-          />
-          <p className="mt-1 text-lg pb-2 max-w-175 mx-auto">
+          /> */}
+          {/* <p className="mt-1 text-lg pb-2 max-w-175 mx-auto">
             {blogData?.author}
           </p> */}
         </div>

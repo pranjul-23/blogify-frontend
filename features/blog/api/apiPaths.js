@@ -5,4 +5,6 @@ export const BLOG_API_PATHS = {
   getAllBlogs: "/api/blogs",
   getBlogDetails: "/api/blogs/getBlogDetails",
   update: "/api/blogs/update",
+  delete: "/api/blogs/delete",
+  myBlogs: "/api/blogs/my-blogs",
 };

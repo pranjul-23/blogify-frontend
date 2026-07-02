@@ -16,6 +16,7 @@ export function getBlogDetails(id) {
 export function createBlog(payload) {
   return apiClient(BLOG_API_PATHS.create, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -26,6 +27,7 @@ export function createBlog(payload) {
 export function updateBlog(id, payload) {
   return apiClient(`${BLOG_API_PATHS.update}/${id}`, {
     method: "PUT",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -36,6 +38,14 @@ export function updateBlog(id, payload) {
 export function uploadFile(formData) {
   return apiClient(BLOG_API_PATHS.upload, {
     method: "POST",
+    credentials: "include",
     body: formData,
+  });
+}
+
+export function deleteBlog(id) {
+  return apiClient(`${BLOG_API_PATHS.delete}/${id}`, {
+    method: "DELETE",
+    credentials: "include",
   });
 }

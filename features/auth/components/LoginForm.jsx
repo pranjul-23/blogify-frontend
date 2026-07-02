@@ -1,6 +1,9 @@
 "use client";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { loginSchema } from "../validation/loginSchema";
+import { loginUser } from "../api/authApis";
+import toast from "react-hot-toast";
 
 const initialState = {
   fullName: "",
@@ -10,6 +13,7 @@ const initialState = {
 };
 
 export default function LoginForm() {
+  const router = useRouter();
   const {
     values,
     handleChange,
@@ -22,7 +26,13 @@ export default function LoginForm() {
     initialValues: initialState,
     validationSchema: loginSchema,
     onSubmit: async (values) => {
-      console.log("values", values);
+      try {
+        await loginUser(values);
+        toast.success("Logged in successfully.");
+        router.push("/");
+      } catch (error) {
+        toast.error(error.message);
+      }
     },
   });
 

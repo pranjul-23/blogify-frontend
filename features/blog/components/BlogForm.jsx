@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import FileUpload from "../../../shared/components/FileUpload";
 import { blogSchema } from "../validation/blogSchema";
-import { createBlog, updateBlog } from "../api/blogApi";
+import { createBlog, updateBlog } from "../api/blogApis";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -105,7 +105,7 @@ export default function BlogForm({
             blurDataURL="data:image/..."
           />
         )}
-        <FileUpload onUploadSuccess={onUploadSuccess} />
+        <FileUpload folder="blogs" onUploadSuccess={onUploadSuccess} />
 
         {touched.blogImage && errors.blogImage && (
           <p className="text-sm text-red-500 font-medium mt-1">

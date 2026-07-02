@@ -1,15 +1,24 @@
 "use client";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { signupSchema } from "../validation/signupSchema";
+import { signupUser } from "../api/authApis";
+import toast from "react-hot-toast";
+import { formatRole } from "@/utils/formatRole";
+import FileUpload from "@/shared/components/FileUpload";
 
 const initialState = {
   fullName: "",
   email: "",
   password: "",
   confirmPassword: "",
+  role: "USER",
+  profileImage: "",
 };
 
 export default function SignupForm() {
+  const router = useRouter();
+  const roles = ["USER", "ADMIN"];
   const {
     values,
     handleChange,
@@ -18,13 +27,25 @@ export default function SignupForm() {
     touched,
     errors,
     isSubmitting,
+    setFieldValue,
   } = useFormik({
     initialValues: initialState,
     validationSchema: signupSchema,
     onSubmit: async (values) => {
-      console.log("values", values);
+      try {
+        console.log("values", values)
+        await signupUser(values);
+        toast.success("User created successfully.");
+        router.push("/login");
+      } catch (error) {
+        toast.error(error.message);
+      }
     },
   });
+
+  const onUploadSuccess = (file) => {
+    setFieldValue("profileImage", file.filepath);
+  };
 
   return (
     <div className="flex items-center justify-center p-8">
@@ -45,8 +66,8 @@ export default function SignupForm() {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {touched && errors && (
-              <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+            {touched.fullName && errors.fullName && (
+              <p className="text-sm text-red-500 mt-1">{errors.fullName}</p>
             )}
           </div>
           <div className="mb-3">
@@ -60,7 +81,7 @@ export default function SignupForm() {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {touched && errors && (
+            {touched.email && errors.email && (
               <p className="text-sm text-red-500 mt-1">{errors.email}</p>
             )}
           </div>
@@ -75,7 +96,7 @@ export default function SignupForm() {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {touched && errors && (
+            {touched.password && errors.password && (
               <p className="text-sm text-red-500 mt-1">{errors.password}</p>
             )}
           </div>
@@ -92,11 +113,32 @@ export default function SignupForm() {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {touched && errors && (
+            {touched.confirmPassword && errors.confirmPassword && (
               <p className="text-sm text-red-500 mt-1">
                 {errors.confirmPassword}
               </p>
             )}
+          </div>
+          <div className="mb-3">
+            <label className="block text-sm font-medium mb-1">User Role</label>
+            <select
+              value={values.role}
+              className="w-full rounded-lg border py-3 px-2"
+              onChange={handleChange}
+              onBlur={handleBlur}
+            >
+              {roles.map((role, index) => (
+                <option key={index} value={role}>
+                  {formatRole(role)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="block text-sm font-medium mb-1">
+              User Profile
+            </label>
+            <FileUpload folder="profiles" onUploadSuccess={onUploadSuccess} />
           </div>
           <button
             type="submit"

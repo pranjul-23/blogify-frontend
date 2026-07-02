@@ -1,5 +1,7 @@
+export const dynamic = "force-dynamic";
+
 import BlogForm from "@/features/blog/components/BlogForm";
-import { getBlogCategories } from "@/features/blog/api/blogApi";
+import { getBlogCategories } from "@/features/blog/api/blogApis";
 
 export const metadata = {
   title: "Create Blog",
@@ -7,12 +9,12 @@ export const metadata = {
 };
 
 export default async function CreateBlog() {
-  const categories = await getBlogCategories();
+  const { data: categories } = await getBlogCategories();
 
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl text-center font-bold mb-6">Create Blog</h1>
-      <div className="w-xl mx-auto">
+      <div className="w-96 md:w-xl mx-auto">
         <BlogForm categories={categories} mode="create" />
       </div>
     </div>

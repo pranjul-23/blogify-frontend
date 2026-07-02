@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { uploadFile } from "../../features/blog/api/blogApi";
+import { uploadFile } from "../../features/blog/api/blogApis";
 
-export default function FileUpload({ onUploadSuccess }) {
+export default function FileUpload({ folder, onUploadSuccess }) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState("");
   const handleFileChange = async (event) => {
@@ -11,10 +11,10 @@ export default function FileUpload({ onUploadSuccess }) {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("folder", folder);
     try {
       setIsUploading(true);
-      const uploadedFile = await uploadFile(formData);
-
+      const { data: uploadedFile } = await uploadFile(formData);
       onUploadSuccess({
         filename: uploadedFile.filename,
         filepath: uploadedFile.filepath,
