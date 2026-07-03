@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import Avatar from "./Avatar";
 
 export default function ProfileDropdown({ user, onLogout }) {
   const [open, setOpen] = useState(false);
@@ -16,19 +16,7 @@ export default function ProfileDropdown({ user, onLogout }) {
         onClick={() => setOpen((prev) => !prev)}
         className="cursor-pointer rounded-full focus:outline-none"
       >
-        {user?.profileImage ? (
-          <Image
-            src={user.profileImage}
-            width={40}
-            height={40}
-            alt={user.fullName}
-            className="rounded-full object-cover border"
-          />
-        ) : (
-          <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
-            {user?.fullName?.charAt(0).toUpperCase()}
-          </div>
-        )}
+        <Avatar user={user} />
       </button>
 
       {open && (

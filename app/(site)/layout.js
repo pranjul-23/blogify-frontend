@@ -18,7 +18,7 @@ export default async function BlogLayout({ children }) {
   return (
     <div className="bg-gray-200">
       <Header user={currentUser} />
-      <main>{children}</main>
+      <main className="min-h-screen">{children}</main>
       <Footer />
     </div>
   );

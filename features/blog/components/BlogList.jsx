@@ -25,15 +25,7 @@ const BlogList = ({ blogs }) => {
       <CategoryTab currentTab={currentTab} onTabChange={handleTabChange} />
       <div className="flex flex-wrap justify-center gap-2 gap-y-10 mb-16 xl:mx-24">
         {filteredBlogs?.map((blog) => (
-          <Card
-            key={blog._id}
-            id={blog._id}
-            image={blog.blogImage}
-            title={blog.title}
-            description={blog.description}
-            category={blog.category}
-            icon={assets.arrow}
-          />
+          <Card key={blog._id} blog={blog} icon={assets.arrow} />
         ))}
       </div>
     </>

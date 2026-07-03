@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import UserProfile from "./UserProfile";
+import UserMenu from "./UserMenu";
 import { useRouter } from "next/navigation";
 import { logout } from "@/features/auth/api/authApis";
 import toast from "react-hot-toast";
@@ -25,7 +25,7 @@ export default function Header({ user = null }) {
   };
 
   return (
-    <nav className="bg-[#eee] shadow-md">
+    <nav className="bg-[#eee] shadow-md sticky top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -51,7 +51,7 @@ export default function Header({ user = null }) {
                 >
                   Create Blog
                 </Link>
-                <UserProfile user={user} onLogout={handleLogout} />
+                <UserMenu user={user} onLogout={handleLogout} />
               </div>
             ) : (
               <div className="flex gap-4">
