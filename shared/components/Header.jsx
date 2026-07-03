@@ -101,7 +101,7 @@ export default function Header({ user = null }) {
             </Link>
 
             <Link
-              href="/blogs"
+              href="/blogs/my-blogs"
               className="block py-2 text-gray-700 hover:text-blue-600"
             >
               My Blogs
