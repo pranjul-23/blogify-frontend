@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/shared/api/api-server";
 
 export default async function ProfilePage() {
   const { data: user } = await getCurrentUser();
-  console.log("user", user);
+
   return (
     <div className="min-h-[calc(100vh-160px)] bg-gray-100 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">

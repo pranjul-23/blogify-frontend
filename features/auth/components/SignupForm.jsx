@@ -33,7 +33,6 @@ export default function SignupForm() {
     validationSchema: signupSchema,
     onSubmit: async (values) => {
       try {
-        console.log("values", values)
         await signupUser(values);
         toast.success("User created successfully.");
         router.push("/login");
