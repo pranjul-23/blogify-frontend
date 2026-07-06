@@ -47,13 +47,6 @@ export default async function ProfilePage() {
               <p className="text-sm text-gray-500">Role</p>
               <p className="mt-1 font-semibold text-gray-900">{user.role}</p>
             </div>
-
-            {/* <div className="rounded-xl border border-gray-200 p-5">
-              <p className="text-sm text-gray-500">Member Since</p>
-              <p className="mt-1 font-semibold text-gray-900">
-                {new Date(user.createdAt).toLocaleDateString()}
-              </p>
-            </div> */}
           </div>
         </div>
       </div>

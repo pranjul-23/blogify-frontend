@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { loginSchema } from "../validation/loginSchema";
 import { loginUser } from "../api/authApis";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const initialState = {
   fullName: "",
@@ -29,7 +30,8 @@ export default function LoginForm() {
       try {
         await loginUser(values);
         toast.success("Logged in successfully.");
-        router.push("/");
+        router.replace("/");
+        router.refresh();
       } catch (error) {
         toast.error(error.message);
       }
@@ -81,6 +83,15 @@ export default function LoginForm() {
           >
             Login
           </button>
+          <div className="text-center text-sm text-gray-600">
+            Don't have an account?{" "}
+            <Link
+              href="/signup"
+              className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Sign up
+            </Link>
+          </div>
         </form>
       </div>
     </div>

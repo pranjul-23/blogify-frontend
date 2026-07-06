@@ -6,6 +6,7 @@ import { signupUser } from "../api/authApis";
 import toast from "react-hot-toast";
 import { formatRole } from "@/utils/formatRole";
 import FileUpload from "@/shared/components/FileUpload";
+import Link from "next/link";
 
 const initialState = {
   fullName: "",
@@ -35,7 +36,7 @@ export default function SignupForm() {
       try {
         await signupUser(values);
         toast.success("User created successfully.");
-        router.push("/login");
+        router.replace("/login");
       } catch (error) {
         toast.error(error.message);
       }
@@ -144,8 +145,17 @@ export default function SignupForm() {
             className="w-full rounded-lg bg-blue-700 py-3 text-white cursor-pointer disabled:bg-gray-400"
             disabled={isSubmitting}
           >
-            Signup
+            Sign up
           </button>
+          <div className="text-center text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Log in
+            </Link>
+          </div>
         </form>
       </div>
     </div>

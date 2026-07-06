@@ -5,6 +5,7 @@ import UserMenu from "./UserMenu";
 import { useRouter } from "next/navigation";
 import { logout } from "@/features/auth/api/authApis";
 import toast from "react-hot-toast";
+import UserMobileMenu from "./UserMobileMenu";
 
 export default function Header({ user = null }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -17,7 +18,7 @@ export default function Header({ user = null }) {
     try {
       await logout();
       toast.success("User is logged out.");
-      router.push("/");
+      router.replace("/login");
       router.refresh();
     } catch (error) {
       toast.error(error.message);
@@ -59,7 +60,7 @@ export default function Header({ user = null }) {
                   href="/signup"
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
-                  Signup
+                  Sign up
                 </Link>
                 <Link
                   href="/login"
@@ -93,26 +94,11 @@ export default function Header({ user = null }) {
         </div>
         {showMobileMenu && (
           <div className="pb-4">
-            <Link
-              href="/"
-              className="block py-2 text-gray-700 hover:text-blue-600"
-            >
-              Home
-            </Link>
-
-            <Link
-              href="/blogs/my-blogs"
-              className="block py-2 text-gray-700 hover:text-blue-600"
-            >
-              My Blogs
-            </Link>
-
-            <Link
-              href="/blogs/create"
-              className="block mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-center hover:bg-blue-700"
-            >
-              Create Blog
-            </Link>
+            <UserMobileMenu
+              user={user}
+              onLogout={handleLogout}
+              closeMenu={toggleMobileMenu}
+            />
           </div>
         )}
       </div>
