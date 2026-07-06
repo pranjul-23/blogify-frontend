@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import UserMobileMenu from "./UserMobileMenu";
 
 export default function Header({ user = null }) {
+  console.log("header user:", user);
+
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const router = useRouter();
   const toggleMobileMenu = () => {

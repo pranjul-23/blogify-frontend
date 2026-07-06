@@ -7,6 +7,8 @@ export default async function BlogLayout({ children }) {
   try {
     const response = await getCurrentUser();
     currentUser = response?.data;
+    console.log("Layout executed");
+    console.log("User:", currentUser);
   } catch (err) {
     if (err.status === 401) {
       currentUser = null;
