@@ -1,13 +1,7 @@
 // shared/api/apiClient.js
 
 import { config } from "@/config";
-
-export class ApiError extends Error {
-  constructor(status, message) {
-    super(message);
-    this.status = status;
-  }
-}
+import { ApiError } from "./api-error";
 
 export async function apiClient(url, options = {}) {
   try {

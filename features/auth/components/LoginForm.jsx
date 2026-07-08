@@ -7,10 +7,8 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 
 const initialState = {
-  fullName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
 export default function LoginForm() {
