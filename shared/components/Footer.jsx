@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { assets } from "@/assets/assets";
@@ -9,10 +11,28 @@ const Footer = () => {
       <p className="text-sm text-white">
         All right reserved. Copyright @blogger
       </p>
-      <div className="flex">
-        <Image src={assets.facebook_icon} alt="facebook_icon" width={40} />
-        <Image src={assets.twitter_icon} alt="facebook_icon" width={40} />
-        <Image src={assets.googleplus_icon} alt="facebook_icon" width={40} />
+      <div className="flex items-center gap-4">
+        {/* GitHub Profile */}
+        <a
+          href="https://github.com/pranjul-23"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub Profile"
+          className="text-white hover:opacity-80 transition"
+        >
+          <Image src={assets.github_icon} alt="github_icon" width={30} />
+        </a>
+
+        {/* LinkedIn Profile */}
+        <a
+          href="https://www.linkedin.com/in/pranjul-kumar-50b355132"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn Profile"
+          className="text-white hover:opacity-80 transition"
+        >
+          <Image src={assets.linkedin_icon} alt="linkedin_icon" width={30} />
+        </a>
       </div>
     </div>
   );
