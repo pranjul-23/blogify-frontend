@@ -122,6 +122,8 @@ export default function SignupForm() {
           <div className="mb-3">
             <label className="block text-sm font-medium mb-1">User Role</label>
             <select
+              name="role"
+              id="role"
               value={values.role}
               className="w-full rounded-lg border py-3 px-2"
               onChange={handleChange}

@@ -21,6 +21,7 @@ export default function FileUpload({ folder, onUploadSuccess }) {
       });
       setError("");
     } catch (error) {
+      console.log(error);
       console.error(error);
       setError(error?.message);
     } finally {

@@ -107,11 +107,11 @@ export default function BlogForm({
         )}
         <FileUpload folder="blogs" onUploadSuccess={onUploadSuccess} />
 
-        {touched.blogImage && errors.blogImage && (
+        {/* {touched.blogImage && errors.blogImage && (
           <p className="text-sm text-red-500 font-medium mt-1">
             {errors.blogImage}
           </p>
-        )}
+        )} */}
       </div>
       <div className="mb-3">
         <label className="block text-sm mb-1">Category</label>

@@ -12,9 +12,19 @@ export async function apiClient(url, options = {}) {
     const data = await response.json();
 
     if (!response.ok) {
+      const errorMessage =
+        data?.message ||
+        data?.errors?.file?.[0] ||
+        (typeof data?.errors === "string" ? data.errors : null) ||
+        (typeof data === "string" && data.length < 200 ? data : null) ||
+        response.statusText ||
+        "Something went wrong.";
+
       throw new ApiError(
         response.status,
-        data?.message || "Something went wrong.",
+        errorMessage,
+        data?.errors || null,
+        data,
       );
     }
 

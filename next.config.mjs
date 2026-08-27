@@ -10,7 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "blogify-assets-pk.s3.ap-south-1.amazonaws.com",
+        hostname: "objectstorage.ap-mumbai-1.oraclecloud.com",
         pathname: "/**",
       },
     ],
