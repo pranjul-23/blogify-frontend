@@ -28,17 +28,9 @@ export async function POST(request) {
       message: data.message,
     });
 
-    // response.cookies.set("token", data.token, {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    //   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    //   path: "/",
-    //   maxAge: 7 * 24 * 60 * 60, // seconds
-    // });
-
     response.cookies.set("token", data.token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
       maxAge: 7 * 24 * 60 * 60, // seconds
